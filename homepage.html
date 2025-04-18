@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LocalShops Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      background: #fff;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #fff, #ffe6ec);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+  color: #ff3f6c;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+    header input {
+      width: 50%;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .cart-icon {
+  font-size: 1.8rem;
+  text-decoration: none;
+  color: #ff3f6c;
+  margin-left: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.cart-icon:hover {
+  transform: scale(1.2);
+}
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background-color: #fff0f5;
+      padding: 1rem;
+    }
+    nav a {
+      color: #ff3f6c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .slider-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-top: 10px;
+}
+
+.slider {
+  display: flex;
+  width: max-content;
+  animation: scroll 20s linear infinite;
+}
+
+.slider img {
+  width: 20vw;
+  min-width: 200px;
+  height: auto;
+  margin-right: 10px;
+  border-radius: 8px;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+    .categories, .product-grid, .featured-shops, .special-offers, .testimonials, .why-local, footer {
+      padding: 3rem;
+    }
+    h2 {
+      margin-bottom: 1rem;
+    }
+    .category-grid, .products, .shop-list, .offer-list, .testimonial-list, .reasons-list {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .category, .product, .shop, .offer, .testimonial, .reason {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 8px;
+      flex: 1 1 100px;
+      text-align: center;
+    }
+    .category:hover, .product:hover, .shop:hover, .offer:hover, .reason:hover {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transform: translateY(-5px);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .category img, .product img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: .5rem;
+    }
+    
+    footer {
+      background: #ffebf0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 2rem;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <header>
+    <div class="logo">LocalShops</div>
+    <input type="text" placeholder="Search for clothes, shops..." />
+    <a href="cart.html" class="cart-icon" title="Go to Cart">🛒</a>
+  </header>
+  
+
+  <script>
+    const userLocation = localStorage.getItem("userLocation") || "your area";
+    document.addEventListener("DOMContentLoaded", () => {
+      const loc = document.createElement("div");
+      loc.style.padding = "0.5rem 2rem";
+      loc.style.fontSize = "0.9rem";
+      loc.style.color = "#555";
+      loc.innerHTML = `📍 Showing results for: <strong>${userLocation}</strong>`;
+      document.body.insertBefore(loc, document.body.children[1]);
+    });
+  </script>
+  
+  <nav>
+    <a href="#all">All</a>
+    <a href="#men">Men</a>
+    <a href="women.html">Women</a>
+    <a href="#kids">Kids</a>
+  </nav>
+
+  <div class="slider-wrapper">
+    <div class="slider">
+      <img src="frock.jpg" alt="Slide 1" />
+      <img src="tshirt.webp" alt="Slide 2" />
+      <img src="jeans.webp" alt="Slide 3" />
+      <img src="shirt.avif" alt="Slide 4" />
+      
+      <!-- Duplicated for seamless loop -->
+      <img src="frock.jpg" alt="Slide 1" />
+      <img src="tshirt.webp" alt="Slide 2" />
+      <img src="jeans.webp" alt="Slide 3" />
+      <img src="shirt.avif" alt="Slide 4" />
+    </div>
+  </div>
+  
+
+  <section class="categories">
+    <h2>Shop by Category</h2>
+    <div class="category-grid">
+      <div class="category">
+        <a href="women.html" style="text-decoration: none; color: inherit;">
+          <img src="tshirt.webp" alt="Women" />
+          <p>Women</p>
+        </a>
+      </div>
+      
+      <div class="category"><img src="menswear.webp" alt="Men" />Men</div>
+      <div class="category"><img src="kidswear.jpg" alt="Kidswear" />Kidswear</div>
+      <div class="category"><img src="footwear.webp" alt="Footwear" />Footwaer</div>
+      <div class="category"><img src="beauty.jpg" alt="Beauty" />Beauty</div>
+      
+    </div>
+  </section>
+
+  <section class="featured-shops">
+    <h2>Featured Local Shops</h2>
+    <div class="shop-list">
+      <div class="shop">
+        <a href="shop1.html">Trendy Threads</a>
+      </div>
+      
+      <div class="shop"> <a href="shop1.html">City Fashion Hub</a> </div>
+      <div class="shop"> <a href="shop1.html">Modern Look</a> </div>
+      <div class="shop"> <a href="shop1.html">Classic Wear</a> </div>
+    </div>
+  </section>
+
+  <section class="product-grid">
+    <h2>Trending Products</h2>
+    <div class="products">
+      <div class="product">
+        <img src="kurta.webp" alt="Kurta Set">
+        <p>Kurta Set</p>
+      </div>
+      <div class="product">
+        <img src="checked shirt.webp" alt="Shirt">
+        <p> Checked Shirt</p>
+      </div>
+      <div class="product">
+        <img src="men tshirt.webp" alt="T-Shirt">
+        <p> T-Shirt</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="special-offers">
+    <h2>Special Offers</h2>
+    <div class="offer-list">
+      <div class="offer">🎉 Buy 1 Get 1 Free at Trendy Threads!</div>
+      <div class="offer">🔥 20% Off for First-Time Shoppers!</div>
+      <div class="offer">🛍️ Free Delivery on Orders Above ₹999</div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2>Customer Testimonials</h2>
+    <div class="testimonial-list">
+      <div class="testimonial">"Loved the variety and fast delivery! Supporting my local shop has never been easier." – Aarti</div>
+      <div class="testimonial">"Great quality products and easy returns. Highly recommend!" – Rohit</div>
+    </div>
+  </section>
+
+  <section class="why-local">
+    <h2>Why Shop Local?</h2>
+    <div class="reasons-list">
+      <div class="reason">🌱 Support Local Economy</div>
+      <div class="reason">📦 Fast Hyperlocal Delivery</div>
+      <div class="reason">❤️ Personalized Experience</div>
+    </div>
+  </section>
+
+  
+
+  <footer>
+    &copy; 2025 LocalShops.com | All Rights Reserved | Designed by Priyanshu Kumar
+  </footer>
+</body>
+</html>

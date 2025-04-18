@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enter Your Location</title>
+  <style>
+    body {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+    }
+    .location-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+    input {
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #ff3f6c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: #e0355d;
+    }
+  </style>
+</head>
+<body>
+  <div class="location-box">
+    <h2>Enter Your Location</h2>
+    <input type="text" id="locationInput" placeholder="Enter your city or area">
+    <button onclick="goToHome()">Continue</button>
+    <button onclick="detectLocation()">📍 Detect My Location</button>
+  </div>
+
+  <script>
+    function goToHome() {
+      const location = document.getElementById("locationInput").value.trim();
+      if (location) {
+        localStorage.setItem("userLocation", location);
+        window.location.href = "homepage.html";
+      } else {
+        alert("Please enter your location before continuing.");
+      }
+    }
+
+    function detectLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+            const data = await response.json();
+            const location = data.address.city || data.address.town || data.address.village || data.address.county;
+            if (location) {
+              document.getElementById("locationInput").value = location;
+            } else {
+              alert("Could not detect your city. Please enter it manually.");
+            }
+          } catch (error) {
+            alert("Error detecting location. Please try again.");
+          }
+        }, function(error) {
+          alert("Location access denied. Please allow access or enter location manually.");
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+</body>
+</html>
+ 
