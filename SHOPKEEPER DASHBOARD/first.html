@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shopkeeper Dashboard</title>
+</head>
+<body>
+  <h1>Register Your Shop</h1>
+  <form id="shopForm">
+    <input type="text" id="shopName" placeholder="Shop Name" required />
+    <input type="text" id="ownerName" placeholder="Owner Name" required />
+    <button type="submit">Register</button>
+  </form>
+
+  <p id="status"></p>
+  <a href="../homepage.html">← Go to Homepage</a>
+
+  <script>
+    document.getElementById("shopForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const shopName = document.getElementById("shopName").value;
+      const ownerName = document.getElementById("ownerName").value;
+
+      const shop = { shopName, ownerName };
+      localStorage.setItem("registeredShop", JSON.stringify(shop));
+
+      document.getElementById("status").innerText = "Shop registered successfully!";
+      this.reset();
+    });
+  </script>
+</body>
+</html>
