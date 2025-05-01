@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LocalShops Fashion</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
@@ -28,10 +28,10 @@
       z-index: 100;
     }
     .logo {
-  color: #ff3f6c;
-  font-size: 1.8rem;
-  font-weight: bold;
-}
+      color: #ff3f6c;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
     header input {
       width: 50%;
       padding: 0.5rem;
@@ -39,16 +39,15 @@
       border: 1px solid #ccc;
     }
     .cart-icon {
-  font-size: 1.8rem;
-  text-decoration: none;
-  color: #ff3f6c;
-  margin-left: 1rem;
-  transition: transform 0.2s ease;
-}
-
-.cart-icon:hover {
-  transform: scale(1.2);
-}
+      font-size: 1.8rem;
+      text-decoration: none;
+      color: #ff3f6c;
+      margin-left: 1rem;
+      transition: transform 0.2s ease;
+    }
+    .cart-icon:hover {
+      transform: scale(1.2);
+    }
     nav {
       display: flex;
       justify-content: center;
@@ -65,31 +64,27 @@
       text-decoration: underline;
     }
     .slider-wrapper {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  margin-top: 10px;
-}
-
-.slider {
-  display: flex;
-  width: max-content;
-  animation: scroll 20s linear infinite;
-}
-
-.slider img {
-  width: 20vw;
-  min-width: 200px;
-  height: auto;
-  margin-right: 10px;
-  border-radius: 8px;
-}
-
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      margin-top: 10px;
+    }
+    .slider {
+      display: flex;
+      width: max-content;
+      animation: scroll 20s linear infinite;
+    }
+    .slider img {
+      width: 20vw;
+      min-width: 200px;
+      height: auto;
+      margin-right: 10px;
+      border-radius: 8px;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
     .categories, .product-grid, .featured-shops, .special-offers, .testimonials, .why-local, footer {
       padding: 3rem;
     }
@@ -122,7 +117,6 @@
       border-radius: 8px;
       margin-bottom: .5rem;
     }
-    
     footer {
       background: #ffebf0;
       text-align: center;
@@ -134,13 +128,12 @@
   </style>
 </head>
 <body>
-  
+
   <header>
     <div class="logo">LocalShops</div>
     <input type="text" placeholder="Search for clothes, shops..." />
     <a href="cart.html" class="cart-icon" title="Go to Cart">🛒</a>
   </header>
-  
 
   <script>
     const userLocation = localStorage.getItem("userLocation") || "your area";
@@ -153,7 +146,7 @@
       document.body.insertBefore(loc, document.body.children[1]);
     });
   </script>
-  
+
   <nav>
     <a href="#all">All</a>
     <a href="#men">Men</a>
@@ -167,7 +160,6 @@
       <img src="tshirt.webp" alt="Slide 2" />
       <img src="jeans.webp" alt="Slide 3" />
       <img src="shirt.avif" alt="Slide 4" />
-      
       <!-- Duplicated for seamless loop -->
       <img src="frock.jpg" alt="Slide 1" />
       <img src="tshirt.webp" alt="Slide 2" />
@@ -175,7 +167,6 @@
       <img src="shirt.avif" alt="Slide 4" />
     </div>
   </div>
-  
 
   <section class="categories">
     <h2>Shop by Category</h2>
@@ -186,27 +177,39 @@
           <p>Women</p>
         </a>
       </div>
-      
       <div class="category"><img src="menswear.webp" alt="Men" />Men</div>
       <div class="category"><img src="kidswear.jpg" alt="Kidswear" />Kidswear</div>
-      <div class="category"><img src="footwear.webp" alt="Footwear" />Footwaer</div>
+      <div class="category"><img src="footwear.webp" alt="Footwear" />Footwear</div>
       <div class="category"><img src="beauty.jpg" alt="Beauty" />Beauty</div>
-      
     </div>
   </section>
 
   <section class="featured-shops">
     <h2>Featured Local Shops</h2>
-    <div class="shop-list">
-      <div class="shop">
-        <a href="shop1.html">Trendy Threads</a>
-      </div>
-      
-      <div class="shop"> <a href="shop1.html">City Fashion Hub</a> </div>
-      <div class="shop"> <a href="shop1.html">Modern Look</a> </div>
-      <div class="shop"> <a href="shop1.html">Classic Wear</a> </div>
+    <div class="shop-list" id="shop-list">
+      <!-- Shop list will be dynamically injected -->
     </div>
   </section>
+  
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const shop = JSON.parse(localStorage.getItem("registeredShop"));
+      const shopList = document.getElementById("shop-list");
+  
+      if (shop && shop.shopName) {
+        const shopDiv = document.createElement("div");
+        shopDiv.className = "shop";
+        shopDiv.innerHTML = `<a href="shop1.html">${shop.shopName}</a>`;
+        shopList.appendChild(shopDiv);
+      } else {
+        const emptyMsg = document.createElement("p");
+        emptyMsg.textContent = "No local shops registered yet.";
+        shopList.appendChild(emptyMsg);
+      }
+    });
+  </script>
+  
+  
 
   <section class="product-grid">
     <h2>Trending Products</h2>
@@ -217,11 +220,11 @@
       </div>
       <div class="product">
         <img src="checked shirt.webp" alt="Shirt">
-        <p> Checked Shirt</p>
+        <p>Checked Shirt</p>
       </div>
       <div class="product">
         <img src="men tshirt.webp" alt="T-Shirt">
-        <p> T-Shirt</p>
+        <p>T-Shirt</p>
       </div>
     </div>
   </section>
@@ -252,10 +255,30 @@
     </div>
   </section>
 
-  
-
   <footer>
     &copy; 2025 LocalShops.com | All Rights Reserved | Designed by Priyanshu Kumar
   </footer>
+
+  <script>
+    // Load registered shop from localStorage
+    document.addEventListener("DOMContentLoaded", () => {
+      const shopList = document.getElementById("featured-shop-list");
+      const shopData = JSON.parse(localStorage.getItem("registeredShop"));
+
+      if (shopData && shopData.shopName) {
+        const shopDiv = document.createElement("div");
+        shopDiv.classList.add("shop");
+
+        const shopLink = document.createElement("a");
+        shopLink.href = "shop1.html"; // Adjust as needed
+        shopLink.textContent = shopData.shopName;
+
+        shopDiv.appendChild(shopLink);
+        shopList.appendChild(shopDiv);
+      } else {
+        shopList.innerHTML = "<p>No registered shop to show. Please register your shop.</p>";
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,279 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
   <title>Shopkeeper Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 Library -->
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
-    }
-    body {
-      background: #f9f9f9;
-      padding: 2rem;
-      color: #333;
-    }
-    h1, h2 {
-      color: #2c3e50;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    .form-container, .inventory, .profile-settings, .sales, .analytics {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
-    }
-    .form-group {
-      margin-bottom: 1rem;
-    }
-    label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.75rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      outline: none;
-    }
-    input:focus, textarea:focus, select:focus {
-      border-color: #007bff;
-    }
-    button {
-      background-color: #007bff;
-      color: white;
-      padding: 0.7rem 1.5rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      text-align: left;
-      padding: 0.75rem;
-      border-bottom: 1px solid #ccc;
-    }
-    .actions button {
-      margin-right: 0.5rem;
-      padding: 0.4rem 0.8rem;
-      font-size: 0.9rem;
-    }
-    .low-stock {
-      color: red;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
-  <h1>Shopkeeper Dashboard</h1>
+  <h1>Register Your Shop</h1>
+  <form id="shopForm">
+    <input type="text" id="shopName" placeholder="Shop Name" required />
+    <input type="text" id="ownerName" placeholder="Owner Name" required />
+    <button type="submit">Register</button>
+  </form>
 
-  <div class="profile-settings">
-    <h2>Profile Settings</h2>
-    <div class="form-group">
-      <label for="shopName">Shop Name</label>
-      <input type="text" id="shopName" placeholder="Enter your shop name">
-    </div>
-    <div class="form-group">
-      <label for="ownerName">Owner Name</label>
-      <input type="text" id="ownerName" placeholder="Enter owner's name">
-    </div>
-    <div class="form-group">
-      <label for="contactNo">Contact No.</label>
-      <input type="text" id="contactNo" placeholder="Enter contact number" maxlength="10" oninput="validateContactNo(event)">
-    </div>
-    <div class="form-group">
-      <label for="emailId">Email ID</label>
-      <input type="email" id="emailId" placeholder="Enter email ID" onblur="validateEmail()">
-    </div>
-    <button onclick="saveProfile()">Save Profile</button>
-  </div>
-
-  <div class="form-container">
-    <h2>Add New Product</h2>
-    <div class="form-group">
-      <label for="productName">Product Name</label>
-      <input type="text" id="productName" placeholder="Enter product name">
-    </div>
-    <div class="form-group">
-      <label for="productCategory">Category</label>
-      <select id="productCategory">
-        <option value="">Select category</option>
-        <option value="Menswear">Menswear</option>
-        <option value="Womenswear">Womenswear</option>
-        <option value="Kidswear">Kidswear</option>
-        <option value="Footwear">Footwear</option>
-        <option value="Accessories">Accessories</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="productImageUpload">Upload Image</label>
-      <input type="file" id="productImageUpload" accept="image/*">
-    </div>
-    <div class="form-group">
-      <label for="productPrice">Price (₹)</label>
-      <input type="number" id="productPrice" placeholder="Enter product price">
-    </div>
-    <div class="form-group">
-      <label for="productQuantity">Quantity</label>
-      <input type="number" id="productQuantity" placeholder="Enter quantity">
-    </div>
-    <button onclick="addProduct()">Add Product</button>
-  </div>
-
-  <div class="inventory">
-    <h2>Inventory</h2>
-    <input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()">
-    <table>
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Product Name</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="inventoryList"></tbody>
-    </table>
-  </div>
-
-  <div class="sales">
-    <h2>Recent Sales</h2>
-    <p>No sales yet...</p>
-  </div>
+  <p id="status"></p>
+  <a href="../homepage.html">← Go to Homepage</a>
 
   <script>
-    const inventoryList = document.getElementById('inventoryList');
+    document.getElementById("shopForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const shopName = document.getElementById("shopName").value;
+      const ownerName = document.getElementById("ownerName").value;
 
-    function addProduct() {
-      const name = document.getElementById('productName').value;
-      const category = document.getElementById('productCategory').value;
-      const imageInput = document.getElementById('productImageUpload');
-      const price = document.getElementById('productPrice').value;
-      const quantity = document.getElementById('productQuantity').value;
+      const shop = { shopName, ownerName };
+      localStorage.setItem("registeredShop", JSON.stringify(shop));
 
-      if (!name || !category || !imageInput.files.length || !price || !quantity) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Please fill out all product fields!',
-        });
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const imageURL = event.target.result;
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td><img src="${imageURL}" alt="${name}" style="width: 60px; height: auto; border-radius: 5px;"></td>
-          <td contenteditable="true">${name}</td>
-          <td contenteditable="true">${category}</td>
-          <td contenteditable="true">₹${price}</td>
-          <td contenteditable="true">${quantity}</td>
-          <td class="actions">
-            <button onclick="deleteProduct(this)">Delete</button>
-          </td>
-        `;
-        inventoryList.appendChild(row);
-      };
-      reader.readAsDataURL(imageInput.files[0]);
-
-      document.getElementById('productName').value = '';
-      document.getElementById('productCategory').value = '';
-      imageInput.value = '';
-      document.getElementById('productPrice').value = '';
-      document.getElementById('productQuantity').value = '';
-    }
-
-    function deleteProduct(button) {
-      button.closest('tr').remove();
-    }
-
-    function searchProducts() {
-      const input = document.getElementById('searchBar').value.toLowerCase();
-      const rows = inventoryList.getElementsByTagName('tr');
-      for (let row of rows) {
-        const productName = row.cells[1].textContent.toLowerCase();
-        row.style.display = productName.includes(input) ? '' : 'none';
-      }
-    }
-
-    function saveProfile() {
-      const shopName = document.getElementById('shopName').value;
-      const ownerName = document.getElementById('ownerName').value;
-      const contactNo = document.getElementById('contactNo').value;
-      const emailId = document.getElementById('emailId').value;
-
-      if (!shopName || !ownerName || !contactNo || !emailId) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Please fill out all profile fields!',
-        });
-        return;
-      }
-
-      // Beautiful SweetAlert2 Popup
-      Swal.fire({
-        title: '🎉 Successfully Registered!',
-        text: 'Your profile has been saved.',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
-    }
-
-    // Contact No. validation (numeric only and 10 digits)
-    function validateContactNo(event) {
-      const contactNo = event.target.value;
-      const regex = /^[0-9]{0,10}$/; // Allow only numbers and limit to 10 digits
-
-      if (!regex.test(contactNo)) {
-        event.target.value = contactNo.slice(0, -1);  // Remove last character if it's invalid
-      }
-
-      if (contactNo.length === 10 && !regex.test(contactNo)) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Invalid Contact No.',
-          text: 'Please enter a valid 10-digit contact number.',
-        });
-      }
-    }
-
-    // Gmail format validation
-    function validateEmail() {
-      const email = document.getElementById('emailId').value;
-      const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-      if (!gmailRegex.test(email)) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Invalid Email Format',
-          text: 'Please enter a valid Gmail address.',
-        });
-        document.getElementById('emailId').value = '';  // Clear the input field
-      }
-    }
+      document.getElementById("status").innerText = "Shop registered successfully!";
+      this.reset();
+    });
   </script>
 </body>
 </html>
